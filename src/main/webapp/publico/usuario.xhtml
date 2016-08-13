@@ -50,7 +50,7 @@
 				<h:inputSecret id="senha" label="Senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="10" required="true" redisplay="true"/>
 				
 				<h:outputLabel value="Confirmar Senha:" for="confirmarsenha" />
-				<h:inputSecret id="confirmarsenha" label="Confirmar Senha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="10" required="true" redisplay="true" />
+				<h:inputSecret id="confirmarsenha" label="Confirmar Senha" value="#{usuarioBean.confirmarSenha}" size="10" maxlength="10" required="true" redisplay="true" />
 			</h:panelGrid>
 			
 			<h:commandButton action="#{usuarioBean.salvar}" value="Salvar" />
