@@ -39,7 +39,8 @@
 				<h:column>
 					<h:commandLink action="#{usuarioBean.editar}">
 						<h:graphicImage library="imagens" name="editar16.png" style="border:0" />
-						<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}"></f:setPropertyActionListener>						
+						<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}"/>
+						<f:setPropertyActionListener value="/admin/principal" target="#{usuarioBean.destinoSalvar}"/>						
 					</h:commandLink>
 				</h:column>
 				<h:column>
