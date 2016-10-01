@@ -31,6 +31,7 @@ public class ContaDAOHibernate implements ContaDAO {
 		return (Conta) this.session.get(Conta.class, conta);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Conta> listar(Usuario usuario) {
 		Criteria criteria = this.session.createCriteria(Conta.class);

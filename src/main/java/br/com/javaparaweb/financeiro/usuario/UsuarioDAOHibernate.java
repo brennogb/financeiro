@@ -45,6 +45,7 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 		return (Usuario) consulta.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> listar() {
 		return this.session.createCriteria(Usuario.class).list();

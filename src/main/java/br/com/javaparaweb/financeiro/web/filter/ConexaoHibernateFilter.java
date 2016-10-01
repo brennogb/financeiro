@@ -1,7 +1,6 @@
 package br.com.javaparaweb.financeiro.web.filter;
 
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
