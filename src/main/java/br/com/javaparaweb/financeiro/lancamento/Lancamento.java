@@ -24,7 +24,7 @@ import br.com.javaparaweb.financeiro.conta.Conta;
 import br.com.javaparaweb.financeiro.usuario.Usuario;
 
 @Entity
-@Table(name= "lancamento")
+@Table(name= "Lancamento")
 public class Lancamento implements Serializable {
 	
 	private static final long serialVersionUID = 2480845446334397085L;
