@@ -19,7 +19,7 @@ import br.com.javaparaweb.financeiro.conta.Conta;
 import br.com.javaparaweb.financeiro.lancamento.Lancamento;
 
 @Entity
-@Table(name = "cheque")
+@Table(name = "Cheque")
 public class Cheque implements Serializable {
 
 	private static final long serialVersionUID = 3573370253226669480L;
