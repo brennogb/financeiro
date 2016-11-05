@@ -12,6 +12,7 @@ import br.com.javaparaweb.financeiro.conta.Conta;
 import br.com.javaparaweb.financeiro.conta.ContaRN;
 import br.com.javaparaweb.financeiro.usuario.Usuario;
 import br.com.javaparaweb.financeiro.usuario.UsuarioRN;
+import br.com.javaparaweb.financeiro.util.RNException;
 
 @ManagedBean(name = "usuarioBean")
 @RequestScoped
@@ -21,72 +22,82 @@ public class UsuarioBean {
 	private List<Usuario> lista;
 	private String destinoSalvar;
 	private Conta conta = new Conta();
-	
+
 	public String novo() {
 		this.destinoSalvar = "usuariosucesso";
 		this.usuario = new Usuario();
 		this.usuario.setAtivo(true);
 		return "/publico/usuario";
 	}
-	
+
 	public String editar() {
 		this.confirmarSenha = this.usuario.getSenha();
 		return "/publico/usuario";
 	}
-	
+
 	public String salvar() {
 		FacesContext contexto = FacesContext.getCurrentInstance();
-		
+
 		String senha = this.usuario.getSenha();
-		if(!senha.equals(this.confirmarSenha)) {
+		if (!senha.equals(this.confirmarSenha)) {
 			FacesMessage facesMessage = new FacesMessage("A senha não foi confirmada corretamente");
 			contexto.addMessage(null, facesMessage);
 			return null;
 		}
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(usuario);
-		
+
 		if (this.conta.getDescricao() != null) {
 			this.conta.setUsuario(this.usuario);
 			this.conta.setFavorita(true);
 			ContaRN contaRN = new ContaRN();
 			contaRN.salvar(this.conta);
 		}
-		
+
+		// Envia email após o cadastramento de um usuário novo
+		if (this.destinoSalvar.equals("usuariosucesso")) {
+			try {
+				usuarioRN.enviarEmailPosCadastramento(this.usuario);
+			} catch (RNException e) {
+				contexto.addMessage(null, new FacesMessage(e.getMessage()));
+				return null;
+			}
+		}
+
 		return this.destinoSalvar;
 	}
-	
+
 	public String excluir() {
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.excluir(this.usuario);
 		this.lista = null;
 		return null;
 	}
-	
+
 	public String ativar() {
-		if(this.usuario.isAtivo())
+		if (this.usuario.isAtivo())
 			this.usuario.setAtivo(false);
 		else
 			this.usuario.setAtivo(true);
-		
+
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario);
 		return null;
 	}
-	
+
 	public String atribuiPermissao(Usuario usuario, String permissao) {
 		this.usuario = usuario;
 		Set<String> permissoes = this.usuario.getPermissao();
-		if(permissoes.contains(permissao)) {
+		if (permissoes.contains(permissao)) {
 			permissoes.remove(permissao);
 		} else {
 			permissoes.add(permissao);
 		}
 		return null;
 	}
-	
+
 	public List<Usuario> getLista() {
-		if(this.lista == null) {
+		if (this.lista == null) {
 			UsuarioRN usuarioRN = new UsuarioRN();
 			this.lista = usuarioRN.listar();
 		}
